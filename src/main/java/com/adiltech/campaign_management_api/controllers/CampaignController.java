@@ -2,6 +2,9 @@ package com.adiltech.campaign_management_api.controllers;
 
 import com.adiltech.campaign_management_api.entities.Campaign;
 import com.adiltech.campaign_management_api.services.CampaignService;
+import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,9 +25,10 @@ public class CampaignController {
     }
 
     @PostMapping
-    public Campaign createCampaign(@RequestBody Campaign campaign) {
-        return campaignService.createCampaign(campaign);
+    public ResponseEntity<Campaign> createCampaign(@Valid @RequestBody Campaign campaign) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(campaignService.createCampaign(campaign));
     }
+
 
     @PutMapping("/{id}")
     public Campaign updateCampaign(@PathVariable Long id, @RequestBody Campaign campaign) {
